@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#185e47">
+  <title>Rutas de transporte · ProyOpti</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/vendor/leaflet/leaflet.js" defer></script>
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="header">
+    <a class="brand" href="/" aria-label="ProyOpti, inicio"><span class="brand-icon" aria-hidden="true">↗</span> ProyOpti</a>
+    <span class="tag">TRANSPORTE DE RESIDUOS <span>· PRUEBA</span></span>
+  </header>
+  <main>
+    <div class="intro"><div><p class="eyebrow">PLANIFICACIÓN DE TRANSPORTE</p><h1>Dos puntos. Una ruta.</h1>
+      <p>Selecciona el origen y el destino, consulta la distancia y guarda el recorrido.</p></div>
+      <span class="mode"><span aria-hidden="true">●</span> Ruta para camión</span>
+    </div>
+    <div class="workspace">
+      <aside class="sidebar" aria-label="Planificar y consultar rutas">
+        <section class="panel">
+          <div class="section-title"><h2>Nuevo recorrido</h2><button id="reset" class="text-button" type="button">Limpiar</button></div>
+          <p class="hint">Haz clic en el mapa o escribe las coordenadas.</p>
+          <form id="route-form">
+            <fieldset class="point-card" id="origin-card">
+              <legend><button type="button" class="point-select" id="select-origin" aria-pressed="true"><span class="point-letter origin">A</span> Origen <span class="select-hint">Seleccionar</span></button></legend>
+              <div class="coordinates">
+                <label>Latitud<input id="origin-lat" type="number" min="-90" max="90" step="any" placeholder="4.609710" required></label>
+                <label>Longitud<input id="origin-lon" type="number" min="-180" max="180" step="any" placeholder="-74.081750" required></label>
+              </div>
+            </fieldset>
+            <fieldset class="point-card" id="destination-card">
+              <legend><button type="button" class="point-select" id="select-destination" aria-pressed="false"><span class="point-letter destination">B</span> Destino <span class="select-hint">Seleccionar</span></button></legend>
+              <div class="coordinates">
+                <label>Latitud<input id="destination-lat" type="number" min="-90" max="90" step="any" placeholder="4.653330" required></label>
+                <label>Longitud<input id="destination-lon" type="number" min="-180" max="180" step="any" placeholder="-74.083650" required></label>
+              </div>
+            </fieldset>
+            <button id="calculate" class="button primary" type="submit" disabled>Calcular ruta <span aria-hidden="true">↗</span></button>
+          </form>
+          <p id="status" class="status" role="status" aria-live="polite">Selecciona el punto de origen (A).</p>
+          <form id="save-form" class="save-form" hidden>
+            <label for="route-name">Nombre del recorrido</label>
+            <input id="route-name" type="text" maxlength="100" placeholder="Ej. Punto de recolección → Planta" required>
+            <button id="save" class="button secondary" type="submit">Guardar ruta</button>
+          </form>
+        </section>
+        <section class="panel saved-panel">
+          <div class="section-title"><h2>Rutas guardadas</h2><span id="saved-count" class="count">0</span></div>
+          <p class="hint">Abre un recorrido para ver sus puntos y distancia.</p>
+          <p id="list-status" class="hint" role="status"></p>
+          <div id="saved-routes" class="saved-routes"></div>
+          <button id="refresh" class="text-button refresh" type="button">Actualizar lista</button>
+        </section>
+      </aside>
+      <section class="map-panel" aria-label="Mapa del recorrido">
+        <div class="map-toolbar"><span id="map-instruction">Haz clic para marcar el origen</span><button id="fit" class="text-button" type="button" disabled>Ver recorrido completo</button></div>
+        <div id="map" role="region" aria-label="Mapa interactivo para seleccionar origen y destino"></div>
+        <div class="route-summary">
+          <div><p class="eyebrow">DISTANCIA POR CARRETERA</p><p class="distance"><span id="distance">—</span> <span class="unit">km</span></p></div>
+          <div class="summary-detail"><span id="route-label">Tu recorrido aparecerá aquí</span><span id="duration">Selecciona dos puntos para comenzar</span><span id="route-state"></span></div>
+        </div>
+        <p class="map-note">Los puntos se conectan con la vía accesible más cercana. Perfil de camión predeterminado de <a href="https://valhalla.github.io/valhalla/" target="_blank" rel="noopener noreferrer">Valhalla</a>.</p>
+      </section>
+    </div>
+    <footer>Prototipo de distancias para el modelo de transporte <span>Rutas y mapa: © OpenStreetMap contributors · Valhalla</span></footer>
+  </main>
+</body>
+</html>
